@@ -7,3 +7,6 @@ dist/
 !.env.example
 .superpowers/
 demo-app/public/dsfr/
+.playwright-mcp/
+scratch-*.png
+slide-*.png

@@ -1,18 +1,14 @@
 ---
 theme: default
 title: Claude Code au quotidien sur cartes.gouv.fr
-background: '#003189'
+background: '#000091'
 class: text-center
 highlighter: shiki
 lineNumbers: false
 transition: slide-left
 mdc: true
+colorSchema: light
 ---
-
-<style>
-  .slidev-layout h1 { color: white; }
-  .tag { background: rgba(255,255,255,0.15); border-radius: 4px; padding: 2px 8px; font-size: 0.9em; }
-</style>
 
 # Claude Code au quotidien
 ## sur cartes.gouv.fr
@@ -194,7 +190,7 @@ class: text-center
     <div class="font-bold mt-3 mb-2 text-base">Guides</div>
     <ul class="space-y-1 text-gray-600">
       <li><strong>MCP Claude Code</strong> - <code>docs.claude.com/en/docs/claude-code/mcp</code></li>
-      <li><strong>DSFR</strong> - <code>design.numerique.gouv.fr</code></li>
+      <li><strong>DSFR</strong> - <code>systeme-de-design.gouv.fr</code></li>
     </ul>
   </div>
 </div>
@@ -214,7 +210,7 @@ class: text-center
     </div>
     <div>
       <div class="font-bold text-lg">DSFR officiel</div>
-      <code class="text-sm">design.numerique.gouv.fr</code>
+      <code class="text-sm">systeme-de-design.gouv.fr</code>
     </div>
     <div>
       <div class="font-bold text-lg">cartes.gouv.fr</div>

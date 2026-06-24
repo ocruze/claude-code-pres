@@ -1,0 +1,158 @@
+/* =========================================================
+   DSFR theming pour le deck Slidev
+   Police Marianne + tokens Blue France + theme clair forcé
+   ========================================================= */
+
+/* Charge le CSS DSFR complet (police Marianne, tokens, composants) */
+@import '/dsfr/dsfr.min.css';
+
+/* === Theme clair global === */
+:root {
+  /* Couleurs Blue France officielles */
+  --blue-france: #000091;
+  --blue-france-hover: #1212ff;
+  --blue-france-sun: #6a6af4;
+  --green-success: #18753c;
+  --grey-text: #3a3a3a;
+  --grey-light: #f5f5fe;
+}
+
+/* Forcer html en mode clair (renforce colorSchema: light du headmatter) */
+html,
+html.dark {
+  color-scheme: light;
+}
+
+/* === Typographie DSFR === */
+.slidev-layout,
+.slidev-layout * {
+  font-family: "Marianne", arial, sans-serif;
+}
+
+/* === Titres principaux des slides === */
+.slidev-layout h1 {
+  font-family: "Marianne", arial, sans-serif;
+  font-weight: 700;
+  color: var(--blue-france);
+}
+
+/* Slide titre (background #000091) : titres en blanc */
+.slidev-layout.cover h1,
+.slidev-layout.cover h2 {
+  color: #fff;
+}
+
+/* === Niveaux de titres === */
+.slidev-layout h2 {
+  font-family: "Marianne", arial, sans-serif;
+  font-weight: 700;
+  color: var(--blue-france);
+}
+
+.slidev-layout h3 {
+  font-family: "Marianne", arial, sans-serif;
+  font-weight: 700;
+  color: var(--blue-france);
+  font-size: 1.05rem;
+  margin-top: 1rem;
+  margin-bottom: 0.4rem;
+}
+
+/* === Fond des slides (hors cover) === */
+.slidev-layout:not(.cover) {
+  background: #fff;
+  color: var(--grey-text);
+}
+
+/* === Blocs colorés generiques : remplace bg-blue-50, bg-gray-50 === */
+/* Encadré info Blue France 975 */
+.fr-highlight,
+.dsfr-callout {
+  background: var(--grey-light);
+  border-left: 4px solid var(--blue-france);
+  padding: 0.6rem 1rem;
+  border-radius: 0 4px 4px 0;
+  font-size: 0.9rem;
+}
+
+/* Remplace bg-blue-50 inline dans les slides */
+.bg-blue-50 {
+  background: var(--grey-light) !important;
+  color: var(--grey-text) !important;
+}
+
+/* Remplace bg-gray-50 inline */
+.bg-gray-50 {
+  background: #f6f6f6 !important;
+}
+
+/* Remplace text-gray-400 / text-gray-500 / text-gray-600 */
+.text-gray-400 { color: #6b6b6b !important; }
+.text-gray-500 { color: #666 !important; }
+.text-gray-600 { color: #555 !important; }
+
+/* === Tags / badges DSFR (slide titre) === */
+.tag {
+  display: inline-block;
+  background: rgba(255, 255, 255, 0.18);
+  border: 1px solid rgba(255, 255, 255, 0.35);
+  border-radius: 4px;
+  padding: 3px 10px;
+  font-family: "Marianne", arial, sans-serif;
+  font-size: 0.88rem;
+  color: #fff;
+  margin: 2px 4px;
+}
+
+/* Variante tag clair (slides non-cover) */
+.tag-blue {
+  display: inline-block;
+  background: var(--grey-light);
+  border: 1px solid var(--blue-france);
+  border-radius: 4px;
+  padding: 2px 8px;
+  font-size: 0.85rem;
+  color: var(--blue-france);
+  margin: 2px 3px;
+}
+
+/* === Workflow arrows (slide 3) === */
+.bg-blue-100 {
+  background: #e3e3fd !important;
+  color: var(--blue-france) !important;
+}
+.bg-purple-100 {
+  background: #e8d5fd !important;
+  color: #5b0fa8 !important;
+}
+.bg-green-100 {
+  background: #d7f5e3 !important;
+  color: #18753c !important;
+}
+.bg-yellow-100 {
+  background: #fff6da !important;
+  color: #716143 !important;
+}
+
+/* === RTK stat verte === */
+[style*="color: #18753c"],
+[style*="color:#18753c"] {
+  color: var(--green-success) !important;
+}
+
+/* === Code inline === */
+.slidev-layout code {
+  font-size: 0.85em;
+  background: #ececfe;
+  color: var(--blue-france);
+  border-radius: 3px;
+  padding: 1px 5px;
+}
+
+/* === Masquer le dialogue Goto (table des matieres) quand fermé === */
+/* Goto.vue utilise -top-20 quand fermé, .top-5 quand ouvert        */
+#slidev-goto-dialog:not(.top-5) {
+  visibility: hidden;
+  opacity: 0;
+  pointer-events: none;
+}

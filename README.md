@@ -38,7 +38,7 @@ Ouvrir `stand/handout.html` dans le navigateur → Imprimer → Enregistrer en P
 
 ## Ressources
 - react-dsfr : https://github.com/codegouvfr/react-dsfr
-- DSFR officiel : https://design.numerique.gouv.fr/
+- DSFR officiel : https://www.systeme-de-design.gouv.fr/
 - cartes.gouv.fr : https://github.com/IGNF/cartes.gouv.fr
 
 ## Deck en ligne

@@ -74,5 +74,5 @@ problèmes avant qu'ils ne s'écrivent dans le code.
 5. Colle une URL de nœud Figma et demande l'implémentation
 
 Voir aussi : [react-dsfr](https://github.com/codegouvfr/react-dsfr),
-[DSFR](https://design.numerique.gouv.fr/), et le dépôt
+[DSFR](https://www.systeme-de-design.gouv.fr/), et le dépôt
 [cartes.gouv.fr](https://github.com/IGNF/cartes.gouv.fr) pour un exemple de CLAUDE.md complet.
