@@ -1,4 +1,4 @@
-# Stand de démo — Claude Code au quotidien sur cartes.gouv.fr
+# Stand de démo : Claude Code au quotidien sur cartes.gouv.fr
 
 Kit de stand pour une démonstration booth (~1 h) à l'IGN.
 
