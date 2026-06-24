@@ -4,7 +4,7 @@ Ce fichier fournit les conventions de développement à Claude Code pour ce proj
 
 ## Stack
 
-React 18 · TypeScript · Vite · @codegouvfr/react-dsfr · tss-react · react-hook-form + yup
+React 19 · TypeScript · Vite 8 · @codegouvfr/react-dsfr · tss-react
 
 ## Règles de style
 
@@ -41,8 +41,16 @@ const useStyles = tss.create({
 - Égalité stricte `===` uniquement.
 - Pas de `console.log` dans les commits.
 
-### Formulaires
-react-hook-form + yup pour tout formulaire avec validation.
+### Commandes
+
+```bash
+npm run dev      # http://localhost:5173 (postinstall copie les assets DSFR)
+npm run build    # tsc -b && vite build
+npm run lint     # oxlint (pas ESLint, pas Prettier)
+npm run preview  # Prévisualiser le build
+```
+
+Aucun test configuré.
 
 ## Ce projet est une sandbox de démo
 

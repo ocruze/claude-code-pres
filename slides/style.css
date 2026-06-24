@@ -17,6 +17,12 @@
   --grey-light: #f5f5fe;
 }
 
+/* === Densité : rem racine réduit pour que les slides denses tiennent dans 980x552 ===
+   Testé : slide 3 passe de 655px à 552px pile avec 14px (vs 16px par défaut). */
+html {
+  font-size: 14px;
+}
+
 /* Forcer html en mode clair (renforce colorSchema: light du headmatter) */
 html,
 html.dark {
@@ -62,6 +68,10 @@ html.dark {
 .slidev-layout:not(.cover) {
   background: #fff;
   color: var(--grey-text);
+}
+
+.two-cols-header {
+  column-gap: 20px; /* Adjust the gap size as needed */
 }
 
 /* === Blocs colorés generiques : remplace bg-blue-50, bg-gray-50 === */

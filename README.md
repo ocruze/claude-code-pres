@@ -9,7 +9,6 @@ Kit de stand pour une démonstration booth (~1 h) à l'IGN.
 | `slides/` | Deck Slidev en boucle (mode attract + Q&A) |
 | `demo-app/` | Projet Vite + react-dsfr neuf (sandbox live) |
 | `recording-plan/` | Scripts de tournage des clips |
-| `stand/` | FAQ, cheat-sheet, handout imprimable |
 
 ## Lancer le jour J
 
@@ -27,9 +26,6 @@ cd demo-app
 npm install
 npm run dev    # http://localhost:5173
 ```
-
-### 3. Handout imprimable
-Ouvrir `stand/handout.html` dans le navigateur → Imprimer → Enregistrer en PDF.
 
 ## Pré-requis
 - Node ≥ 20
