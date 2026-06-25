@@ -426,9 +426,9 @@ layout: two-cols-header
 ::left::
 
 ::div{style="font-size: 0.82rem; line-height: 1.4"}
-**superpowers** - Méthodologie câblée : brainstorming, TDD, debugging systématique, plans. Quand : toujours.
-
 **feature-dev** - Architecte + explorer + reviewer en agents spécialisés. Quand : avant chaque feature.
+
+**superpowers** - Méthodologie câblée : brainstorming, TDD, debugging systématique, plans. Quand : avant une feature, au début de projet.
 
 **pr-review-toolkit** - Revue multi-agents : bugs, sécurité, tests, types. Quand : avant chaque merge.
 ::
