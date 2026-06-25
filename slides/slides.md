@@ -19,12 +19,12 @@ author: Orka Arnest CRUZE
 </div>
 
 <div class="mt-8 fr-tags-group justify-center">
-  <span class="fr-tag">plugins</span>
+  <span class="fr-tag">concepts</span>
   <span class="fr-tag">mcp</span>
   <span class="fr-tag">skills</span>
-  <span class="fr-tag">figma</span>
-  <span class="fr-tag">playwright</span>
-  <span class="fr-tag">RTK</span>
+  <span class="fr-tag">hooks</span>
+  <span class="fr-tag">plugins</span>
+  <span class="fr-tag">workflow</span>
 </div>
 
 <div class="absolute bottom-8 left-0 right-0 text-center text-white/60 text-sm">
@@ -53,11 +53,15 @@ author: Orka Arnest CRUZE
             </tr>
             <tr>
               <td><strong>MCP</strong></td>
-              <td>Connexion à un service externe (figma, slack, notion)</td>
+              <td>Connexion à un service externe (figma, slack, notion…)</td>
             </tr>
             <tr>
               <td><strong>Skill</strong></td>
-              <td>Savoir procédural décrit en Markdown</td>
+              <td>Savoir procédural décrit en Markdown, chargé à la demande</td>
+            </tr>
+            <tr>
+              <td><strong>Memory</strong><img src="/icons/claudecode-color.svg"></td>
+              <td>Faits persistants entre sessions, rappelés selon leur pertinence au contexte courant</td>
             </tr>
             <tr>
               <td><strong>Hook</strong><img src="/icons/claudecode-color.svg"></td>
@@ -78,25 +82,19 @@ author: Orka Arnest CRUZE
   </div>
 </div>
 
-<!-- <div class="fr-text--sm fr-mt-2w" style="color: var(--grey-text)">
-  Un <strong>Marketplace</strong> est un dépôt GitHub qui distribue plusieurs plugins sous un même registre.
-</div> -->
-
 ---
 layout: two-cols-header
 ---
 
-# Famille 1 - Capacités & accès
-
-<span class="fr-badge fr-badge--blue-ecume">Tool + MCP</span>
+# Capacités & accès
 
 ::left::
 
-### Tool
+## Tool
 
-Les capacités **natives** de Claude Code - lire/écrire des fichiers, chercher, exécuter des commandes, accéder au web. Vous n'en créez pas directement : vous les étendez via MCP.
+Les capacités **natives** de Claude Code : lire/écrire des fichiers, chercher, exécuter des commandes, accéder au web. On les étend via MCP.
 
-### MCP
+## MCP
 
 Standard ouvert Anthropic. Un serveur MCP expose trois types de capacités :
 
@@ -104,26 +102,23 @@ Standard ouvert Anthropic. Un serveur MCP expose trois types de capacités :
 - **Tools** - actions (créer un ticket, envoyer un message…)
 - **Prompts** - templates réutilisables
 
-<span class="fr-text--sm">Le même serveur MCP fonctionne dans Claude Code, Cursor, OpenCode…</span>
-
 ::right::
 
-<div class="fr-callout fr-callout--blue-ecume fr-mx-4v">
-  <p class="fr-callout__title">Sur cartes.gouv.fr</p>
-  <ul>
-    <li><strong>Figma MCP</strong> - lecture du design (nœud vers code) + screenshot direct dans Claude</li>
-    <li><strong>Playwright MCP</strong> - vérification du rendu live dans le navigateur sans quitter Claude</li>
-    <li><strong>Serena MCP</strong> - navigation sémantique au niveau du symbole (classes/fonctions) ; économise des tokens sur un gros codebase</li>
-  </ul>
-</div>
+::div{class="fr-callout fr-callout--blue-ecume fr-mx-4v"}
+<p class="fr-callout__title">Un seul serveur, plusieurs clients</p>
+
+Le même serveur MCP fonctionne dans **Claude Code, Copilot, Cursor, OpenCode**…
+
+MCP est agnostique du client LLM. Installer un serveur une fois, l'utiliser partout.
+::
 
 ---
 layout: two-cols-header
 ---
 
-# Famille 2 - Savoir & instructions (1/3)
+# Savoir & instructions
 
-## CLAUDE.md [Pourquoi c'est central]{class="fr-badge fr-badge--green-emeraude"}
+## CLAUDE.md - Quoi & pourquoi
 
 ::left::
 
@@ -147,18 +142,19 @@ Le fichier `CLAUDE.md` est **injecté dans le contexte à chaque session**. C'es
 const useStyles = tss.create({ card: { borderRadius: "8px" } });
 ```
 
-- Imports par composant, pas de barrel. Commentaires en FR.
+- Imports par composant, pas de barrel.
+- Commentaires en français, noms des variables en anglais.
 - Tests et lint doivent être au vert.
+
+Exemple réel : `github.com/IGNF/cartes.gouv.fr/blob/main/CLAUDE.md`
 
 ---
 layout: two-cols-header
-comark: true
-
 ---
 
-# Famille 2 - Savoir & instructions (2/3)
+# Savoir & instructions
 
-## CLAUDE.md [Bonnes pratiques]{class="fr-badge fr-badge--green-emeraude"}
+## CLAUDE.md - Bonnes pratiques
 
 ::left::
 
@@ -166,7 +162,7 @@ comark: true
 
 - **Concis et impératif** - une règle = une ligne
 - **Exemples concrets > prose** - montrer, pas raconter
-- **Lister les commandes** du projet (`npm run dev`, `make test`…)
+- **Lister les commandes** du projet (`npm run dev`, `npm run test`, `npm run lint`)
 - **Dire ce qu'il NE faut PAS faire** - les interdictions sont aussi importantes que les règles
 
 ### À éviter
@@ -177,24 +173,56 @@ comark: true
 ::right::
 
 ::div{class="fr-highlight"}
-**Règle d'or** : le CLAUDE.md est le contrat entre l'équipe et Claude. S'il est précis, la première génération de code est quasi commit-ready. S'il est vague, Claude invente.
+**Règle d'or** : le CLAUDE.md est le contrat entre l'équipe développeur et Claude. La qualité du code produit dépend largement de la précision de ces instructions. S'il est vague, Claude va inventer des choses.
 ::
 
 ::div{class="fr-highlight fr-mt-4v"}
-**Commande utile** : `/init` dans Claude Code génère un CLAUDE.md à partir de l'analyse du codebase existant - bon point de départ à affiner.
+**Commande utile** : `/init` dans Claude Code génère un CLAUDE.md à partir de l'analyse du codebase existant - bon point de départ **à affiner**.
 ::
 
 ---
 layout: two-cols-header
 ---
 
-# Famille 2 - Savoir & instructions (3/3)
+# Savoir & instructions
 
-## Skill [savoir procédural en Markdown]{class="fr-badge fr-badge--green-emeraude"}
+## Memory
 
 ::left::
 
-Une skill est un **fichier Markdown** contenant un workflow, une méthodologie ou des conventions. Elle est chargée **à la demande** (~30-50 tokens), pas en permanence.
+Faits persistants entre sessions, **stockés en fichiers Markdown** (un fait par fichier, frontmatter `type`). Un index `MEMORY.md` est chargé à chaque session.
+
+Types : `user` · `feedback` · `project` · `reference`
+
+### Comment la mémoire se nourrit
+
+- Claude **écrit lui-même** un fait quand il rencontre une préférence ou contrainte digne d'être retenue
+- On peut demander explicitement (« retiens ça » ou `/remember`)
+- Fichiers **éditables à la main** ; Claude déduplique avant d'écrire
+
+::right::
+
+::div{class="fr-callout fr-callout--green-emeraude"}
+<p class="fr-callout__title">CLAUDE.md vs Memory</p>
+
+**CLAUDE.md** - toujours injecté dans le contexte (contrat projet, présent à chaque session).
+
+**Memory** - rappelée seulement quand pertinente, pas en permanence. Zéro surcharge token.
+
+Exemples : « préfère le CSS DSFR natif », « jamais de tiret cadratin ».
+::
+
+---
+layout: two-cols-header
+---
+
+# Savoir & instructions
+
+## Skill - Savoir procédural en Markdown
+
+::left::
+
+Une skill est un **fichier Markdown** contenant un workflow, une méthodologie ou des conventions. Elle est chargée **à la demande**, pas en permanence.
 
 - Invocable manuellement : `/nom-de-la-skill`
 - Ou chargée automatiquement par Claude quand c'est pertinent
@@ -208,32 +236,29 @@ Une skill est un **fichier Markdown** contenant un workflow, une méthodologie o
 
 ::right::
 
-<div class="fr-callout fr-callout--green-emeraude">
-  <p class="fr-callout__title">Sur cartes.gouv.fr</p>
-  <ul>
-    <li><code>react-dsfr</code> - conventions d'import, composants natifs, pas de barrel, pas de MUI</li>
-    <li><code>rgaa</code> - grille RGAA 4.1.2 intégrée dans chaque revue d'accessibilité</li>
-    <li><code>securite-anssi</code> - règles de sécurité de l'État appliquées sur les inputs utilisateur</li>
-  </ul>
-</div>
+### Exemples de skills
+
+- `react-dsfr` - conventions d'import, composants natifs, pas de barrel, pas de MUI
+- `rgaa` - grille RGAA 4.1.2 intégrée dans chaque revue d'accessibilité
+- `securite-anssi` - règles de sécurité de l'État appliquées sur les inputs utilisateur
+- `tdd` - red/green/refactor à chaque nouvelle fonctionnalité
+- `systematic-debugging` - diagnostic avant correction
 
 ---
 layout: two-cols-header
 ---
 
-# Famille 3 - Automatisation & parallélisme
-
-<span class="fr-badge fr-badge--purple-glycine">Hook + Subagent</span>
+# Automatisation & parallélisme
 
 ::left::
 
-### Hook
+## Hook
 
-Script déclenché sur un **événement du cycle de vie** (avant/après une commande, à l'arrêt de session…). Déterministe - Claude ne réfléchit pas, le hook s'exécute.
+Script déclenché sur un **événement du cycle de vie** (avant/après une commande, à l'arrêt de session…). Déterministe : Claude ne réfléchit pas, le hook s'exécute.
 
-Cas d'usage : formater à la sauvegarde, rejeter `rm -rf /`, poster un message Slack en fin de session.
+Cas d'usage : formater à la sauvegarde, rejeter `rm -rf /`, poster un message Slack en fin de session, proxifier les sorties CLI.
 
-### Subagent
+## Subagent
 
 Boucle agentique **isolée** qui renvoie un résumé. Mécanisme de parallélisation : plusieurs subagents sur des tâches indépendantes.
 
@@ -241,160 +266,198 @@ Types disponibles : `Explore` (lecture seule), `Plan` (architecture), `code-revi
 
 ::right::
 
-<div class="fr-callout fr-callout--purple-glycine">
-  <p class="fr-callout__title">Sur cartes.gouv.fr</p>
-  <p><strong>RTK (Rust Token Killer)</strong> est un hook transparent sur chaque commande Bash - chaque appel est proxifié automatiquement sans configuration par commande.</p>
-  <p>Pour les tâches complexes, Claude lance des subagents en parallèle : <code>Explore</code> pour cartographier le codebase, <code>Plan</code> pour l'architecture, <code>code-reviewer</code> pour la revue.</p>
-</div>
+::div{class="fr-callout fr-callout--purple-glycine"}
+<p class="fr-callout__title">Parallélisation concrète</p>
+
+Pour une feature complexe, Claude lance des subagents en parallèle :
+
+- `Explore` - cartographie du codebase
+- `Plan` - architecture de la solution
+- `code-reviewer` - revue du code produit
+
+Chaque subagent a son propre contexte et retourne un résumé à l'agent parent.
+::
 
 ---
 layout: two-cols-header
 ---
 
-# Famille 4 - Packaging & distribution (1/2)
-
-<span class="fr-badge fr-badge--pink-tuile">Plugin + Marketplace</span>
+# Packaging & distribution
 
 ::left::
 
-### Plugin
+## Plugin
 
 Un plugin **regroupe** des skills, des hooks, des subagents et des serveurs MCP en une seule unité installable.
 
 - Namespace propre : `/mon-plugin:review`
 - Plusieurs plugins coexistent sans conflit
-- Créer un plugin quand l'intégration est spécifique à Claude Code ; un serveur MCP quand n'importe quel client LLM pourrait l'utiliser
-
-### Marketplace
-
-Dépôt GitHub distribuant plusieurs plugins sous un même registre. On s'y abonne pour accéder à une collection de skills, MCP, hooks et agents.
+- **Plugin vs MCP** - Plugin quand l'intégration est propre à Claude Code ; MCP quand n'importe quel client LLM pourrait l'utiliser.
+- **Marketplace** - Registre GitHub : s'abonner = accéder à une collection de skills, MCP, hooks et agents.
 
 ::right::
 
-<div class="fr-callout fr-callout--pink-tuile">
-  <p class="fr-callout__title">Sur cartes.gouv.fr</p>
-  <p>16 plugins installés :</p>
-  <p class="fr-text--sm">figma · playwright · serena · context7 · superpowers · feature-dev · pr-review-toolkit · commit-commands · typescript-lsp · php-lsp · claude-md-management · security-guidance · code-simplifier · claude-code-setup · karpathy-skills · headroom</p>
-  <p class="fr-text--sm fr-mt-1w">Marketplace officiel Anthropic : <code>github.com/anthropics/claude-plugins-official</code></p>
+::div{class="fr-callout fr-callout--pink-tuile"}
+<p class="fr-callout__title">Marketplace officiel Anthropic</p>
+
+`github.com/anthropics/claude-plugins-official`
+
+Installation en une commande :
+
+`/marketplace install github.com/anthropics/claude-plugins-official`
+::
+
+---
+layout: two-cols-header
+---
+
+# MCP à installer
+
+[Rôle · Quand · Install]{.fr-badge .fr-badge--blue-ecume}
+
+::left::
+
+<div style="font-size: 0.82rem">
+
+**Figma** - lit le design (nœud → données structurées + screenshot) directement dans Claude.
+Quand : à chaque fois que tu implémente un composant à partir d'un design Figma.
+`/plugin install figma` · [docs.figma.com/api](https://www.figma.com/developers/api)
+
+<hr style="margin: 0.5rem 0; border-color: #e5e5e5">
+
+**Playwright** - pilote un navigateur réel, vérifie le rendu live sans quitter Claude.
+Quand : pour valider qu'un composant rendu correspond au design (pas seulement que le code compile).
+`/plugin install playwright` · [playwright.dev](https://playwright.dev/docs/api/class-page)
+
+</div>
+
+::right::
+
+<div style="font-size: 0.82rem">
+
+**Serena** - navigation sémantique au niveau du symbole (classes, fonctions, interfaces).
+Quand : sur un gros codebase où lire chaque fichier coûte trop de tokens.
+`/plugin install serena` · [github.com/oraios/serena](https://github.com/oraios/serena)
+
+<hr style="margin: 0.5rem 0; border-color: #e5e5e5">
+
+**context7** - injecte la doc à jour des libs/frameworks dans le contexte.
+Quand : dès qu'on travaille avec une lib versionée (évite les API hallucinées).
+`/plugin install context7` · [context7.com](https://context7.com)
+
 </div>
 
 ---
 layout: two-cols-header
 ---
 
-# Famille 4 - Packaging & distribution (2/2)
+# Skills
 
-<span class="fr-badge fr-badge--pink-tuile">Les plugins qui changent la donne</span>
+[Rôle · Quand · Install]{.fr-badge .fr-badge--green-emeraude}
 
 ::left::
 
-<div style="font-size: 0.82rem">
-<div class="fr-tile fr-tile--horizontal fr-tile--sm fr-mb-1w">
-  <div class="fr-tile__body">
-    <p class="fr-tile__title">context7</p>
-    <p class="fr-tile__desc">Doc à jour des libs/frameworks injectée dans le contexte - évite les API hallucinées</p>
-  </div>
-</div>
-<div class="fr-tile fr-tile--horizontal fr-tile--sm fr-mb-1w">
-  <div class="fr-tile__body">
-    <p class="fr-tile__title">superpowers</p>
-    <p class="fr-tile__desc">Méthodologie câblée : brainstorming, TDD, debugging systématique, plans d'implémentation</p>
-  </div>
-</div>
-<div class="fr-tile fr-tile--horizontal fr-tile--sm fr-mb-1w">
-  <div class="fr-tile__body">
-    <p class="fr-tile__title">feature-dev</p>
-    <p class="fr-tile__desc">Dev de feature guidé : architecte + explorer + reviewer en agents spécialisés</p>
-  </div>
-</div>
-</div>
+**react-dsfr** - conventions d'import, composants natifs, `fr.cx()`, pas de barrel, pas de MUI.
+Quand : sur tout projet utilisant `@codegouvfr/react-dsfr`.
+`/marketplace install` + dépôt skills DSFR
+
+<p></p>
+
+**rgaa** - grille RGAA 4.1.2 intégrée automatiquement dans chaque revue.
+Quand : avant toute PR touchant du HTML/JSX visible.
+`/marketplace install` + dépôt skills accessibilité
 
 ::right::
 
-<div style="font-size: 0.82rem">
-<div class="fr-tile fr-tile--horizontal fr-tile--sm fr-mb-1w">
-  <div class="fr-tile__body">
-    <p class="fr-tile__title">pr-review-toolkit</p>
-    <p class="fr-tile__desc">Revue de PR multi-agents : bugs, sécurité, tests, design des types</p>
+**securite-anssi** - règles de sécurité de l'État sur les inputs, les headers, les dépendances.
+Quand : sur tout projet exposé au public ou traitant des données personnelles.
+`/marketplace install` + dépôt skills sécurité
+
+::div{class="fr-callout fr-callout--green-emeraude fr-mt-2w"}
+<p class="fr-callout__title">À retenir</p>
+
+Une skill s'installe une fois, s'active à la demande (`/nom`) ou automatiquement par Claude.
+Elle n'est pas dans le contexte en permanence - pas de surcharge token.
+::
+
+---
+layout: two-cols-header
+---
+
+# Hook - RTK (Rust Token Killer)
+
+[Rôle · Quand · Install]{.fr-badge .fr-badge--purple-glycine}
+
+::left::
+
+**Rôle** : proxy transparent sur chaque commande Bash. Filtre la verbosité des CLI avant qu'elle n'entre dans le contexte Claude.
+
+**Quand** : dès qu'on utilise des outils verbeux dans la session (ESLint, grep, git, jest…). Le hook s'enregistre une fois, s'applique à toutes les commandes automatiquement.
+
+**Install** : [rtk-ai.app/#install](https://www.rtk-ai.app/#install)
+
+::right::
+
+<div class="fr-callout fr-callout--purple-glycine">
+  <p class="fr-callout__title">Chiffres réels</p>
+  <div class="flex gap-8 fr-mt-1w">
+    <div class="text-center">
+      <div style="font-size: 2rem; font-weight: 700">85,4 %</div>
+      <div style="color: #6b6b6b; font-size: 0.8rem">réduction sortie CLI courante</div>
+    </div>
+    <div class="text-center">
+      <div style="font-size: 2rem; font-weight: 700">98,7 %</div>
+      <div style="color: #6b6b6b; font-size: 0.8rem">sur ESLint</div>
+    </div>
   </div>
-</div>
-<div class="fr-tile fr-tile--horizontal fr-tile--sm fr-mb-1w">
-  <div class="fr-tile__body">
-    <p class="fr-tile__title">typescript-lsp / php-lsp</p>
-    <p class="fr-tile__desc">Diagnostics LSP en direct - adaptés au stack cartes.gouv.fr (React/TS + Symfony/PHP)</p>
-  </div>
-</div>
-<div class="fr-tile fr-tile--horizontal fr-tile--sm">
-  <div class="fr-tile__body">
-    <p class="fr-tile__title">commit-commands</p>
-    <p class="fr-tile__desc">Commit + push + PR en une seule commande <code>/commit</code></p>
-  </div>
-</div>
+  <p class="fr-mt-2w fr-text--sm">Stats locales via <code>rtk gain</code> / <code>rtk gain --history</code> / <code>rtk discover</code></p>
 </div>
 
 ---
 layout: two-cols-header
 ---
 
-# Mon setup - En pratique
+# Plugins qui changent la donne
+
+[Rôle · Quand · Install : `/plugin install nom`]{.fr-badge .fr-badge--pink-tuile}
 
 ::left::
 
-<span class="fr-badge fr-badge--blue-ecume fr-mb-2w">MCPs</span>
+::div{style="font-size: 0.82rem; line-height: 1.4"}
+**superpowers** - Méthodologie câblée : brainstorming, TDD, debugging systématique, plans. Quand : toujours.
 
-- **Figma** - design → code direct
-- **Playwright** - vérif. rendu live
-- **Serena** - navigation sémantique
+**feature-dev** - Architecte + explorer + reviewer en agents spécialisés. Quand : avant chaque feature.
 
-<span class="fr-badge fr-badge--green-emeraude fr-mt-2w fr-mb-2w">Skills perso</span>
-
-- `react-dsfr` - composants DSFR natifs
-- `rgaa` - audit accessibilité RGAA 4.1
-- `securite-anssi` - règles sécu État
-
-<span class="fr-badge fr-badge--purple-glycine fr-mt-2w fr-mb-2w">Hook</span>
-
-**RTK** - proxy Bash transparent, **-85 % sur la sortie des CLI** (eslint, grep, git…)
+**pr-review-toolkit** - Revue multi-agents : bugs, sécurité, tests, types. Quand : avant chaque merge.
+::
 
 ::right::
 
-<span class="fr-badge fr-badge--pink-tuile fr-mb-2w">16 plugins</span>
+::div{style="font-size: 0.82rem; line-height: 1.4"}
+**typescript-lsp / php-lsp** - Diagnostics LSP en direct dans Claude. Quand : stack TS ou PHP.
 
-figma · playwright · serena · context7
-superpowers · feature-dev · pr-review-toolkit
-commit-commands · typescript-lsp · php-lsp…
+**commit-commands** - Commit + push + PR en une commande `/commit`. Quand : toujours.
 
-<span class="fr-badge fr-badge--brown-caramel fr-mt-2w fr-mb-2w">Commandes utiles</span>
+**claude-md-management** - Maintient le CLAUDE.md à jour depuis les sessions passées. Quand : après chaque sprint.
+::
 
-**Slash commands :**
-`/figma-use` · `/commit` · `/clear` · `/model` · `/fast`
-
-**RTK direct :**
-```bash
-rtk gain              # stats tokens économisés
-rtk gain --history    # historique par commande
-rtk discover          # commandes non-proxifiées
-```
-
----
-layout: center
 ---
 
 # Le workflow
 
 <div class="flex flex-col items-center gap-3 fr-mt-2w text-lg">
   <div class="fr-callout fr-py-1w fr-px-3w" style="background: #e3e3fd; border-color: var(--blue-france)">
-    <strong>URL nœud Figma</strong> - <em>ou</em> - <strong>Issue GitHub + Figma lié</strong>
+    <strong>URL Figma</strong> - <em>et/ou</em> - <strong>Issue GitHub</strong>
   </div>
-  <div style="color: #6b6b6b">↓ get_design_context + screenshot</div>
+  <div style="color: #6b6b6b">↓ get_design_context + screenshot + librairie DSFR figma</div>
   <div class="fr-callout fr-py-1w fr-px-3w" style="background: #e8d5fd; border-color: #5b0fa8">
-    <strong>Claude Code</strong> - plan-first + CLAUDE.md du projet + skills
+    <strong>Claude Code</strong> - plan-first + CLAUDE.md du projet + skills react-dsfr + rgaa
   </div>
   <div style="color: #6b6b6b">↓ rendu conforme DSFR + RGAA</div>
   <div class="fr-callout fr-py-1w fr-px-3w" style="background: #d7f5e3; border-color: #18753c">
     <strong>Composants générés</strong> (React, HTML, ou autre selon le stack)
   </div>
-  <div style="color: #6b6b6b">↓ Playwright - vérification rendu live</div>
+  <div style="color: #6b6b6b">↓ Playwright - vérification rendu live dans le navigateur</div>
   <div class="fr-callout fr-py-1w fr-px-3w" style="background: #fff6da; border-color: #716143">
     <strong>Itération UX</strong> → commit
   </div>
@@ -411,155 +474,53 @@ class: text-center
 <!-- Décommenter la ligne video ci-dessous une fois le clip enregistré -->
 <!-- <video class="mx-auto rounded-xl shadow-2xl" style="max-height: 65vh" autoplay loop muted src="/demo-hero.mp4" /> -->
 
-<div class="fr-mt-2w fr-callout max-w-2xl mx-auto text-left">
-  <p class="fr-callout__title">Prompt réel utilisé</p>
-  <code class="fr-text--sm">
-    « L'ajout d'une licence ouverte m'a l'air avoir un souci.
-    À ma compréhension, ça doit ajouter seulement les éléments
-    de ce design figma.com/design/[...] et rien d'autre »
-  </code>
-  <div class="fr-mt-2w fr-callout__title" style="font-size: 0.9rem">Ce qui se passe</div>
-  <ol class="fr-text--sm" style="list-style: decimal inside">
-    <li>Claude appelle <code>get_design_context</code> sur le nœud Figma</li>
-    <li>Charge le skill <code>react-dsfr</code> pour les conventions DSFR</li>
-    <li>Génère les composants conformes DSFR <em>et</em> RGAA</li>
-    <li>Playwright vérifie le rendu dans le navigateur</li>
-    <li>Itération sur les détails UX</li>
-  </ol>
-</div>
+::div{class="fr-mt-2w fr-callout max-w-2xl mx-auto text-left"}
+<p class="fr-callout__title">Prompt réel utilisé</p>
+
+`« L'ajout d'une licence ouverte m'a l'air avoir un souci. À ma compréhension, ça doit ajouter seulement les éléments de ce design figma.com/design/[...] et rien d'autre »`
+
+**Ce que Claude fait automatiquement**
+
+- Appelle `get_design_context` sur le nœud Figma
+- Charge les skills `react-dsfr` et `rgaa`
+- Génère les composants conformes DSFR *et* RGAA
+- Playwright vérifie le rendu dans le navigateur
+- Itère sur les détails UX jusqu'à validation
+::
 
 ---
 layout: center
 class: text-center
 ---
 
-# RTK - Réduction du bruit
+# À retenir
 
-<div class="stat-success" style="font-size: 5rem; font-weight: 700; line-height: 1.1">85,4 %</div>
-<div class="fr-text--lg" style="color: #6b6b6b">de réduction sur la <strong>sortie des CLI courantes</strong></div>
-
-<div class="fr-alert fr-alert--info fr-alert--sm fr-mt-2w max-w-2xl mx-auto text-left" role="alert">
-  <p>RTK filtre la verbosité d'outils comme ESLint (-98,7 %), grep ou git - <strong>pas</strong> l'ensemble des tokens d'une session. Utile pour réduire le bruit, pas indispensable.</p>
-</div>
-
-<div class="flex justify-center gap-16 fr-mt-2w">
+<div class="flex justify-center gap-12 fr-mt-4w fr-mb-4w">
   <div class="text-center">
-    <div style="font-size: 2rem; font-weight: 700">3 004</div>
-    <div style="color: #6b6b6b; font-size: 0.85rem">commandes</div>
+    <div class="fr-badge fr-badge--blue-ecume fr-mb-1w">Acte 1</div>
+    <div style="font-weight: 600">Concepts</div>
+    <div style="color: #6b6b6b; font-size: 0.85rem">Tool · MCP · Skill · Memory<br>Hook · Subagent · Plugin</div>
   </div>
+  <div style="font-size: 2rem; color: #6b6b6b; align-self: center">→</div>
   <div class="text-center">
-    <div style="font-size: 2rem; font-weight: 700">98,7 %</div>
-    <div style="color: #6b6b6b; font-size: 0.85rem">sur ESLint</div>
+    <div class="fr-badge fr-badge--green-emeraude fr-mb-1w">Acte 2</div>
+    <div style="font-weight: 600">Outillage</div>
+    <div style="color: #6b6b6b; font-size: 0.85rem">Figma · Playwright · Serena<br>context7 · RTK · plugins</div>
   </div>
+  <div style="font-size: 2rem; color: #6b6b6b; align-self: center">→</div>
   <div class="text-center">
-    <div style="font-size: 2rem; font-weight: 700">5,9 M</div>
-    <div style="color: #6b6b6b; font-size: 0.85rem">tokens filtrés via <code>rtk read</code></div>
+    <div class="fr-badge fr-badge--pink-tuile fr-mb-1w">Acte 3</div>
+    <div style="font-weight: 600">Workflow</div>
+    <div style="color: #6b6b6b; font-size: 0.85rem">Figma → DSFR + RGAA<br>Playwright → commit</div>
   </div>
 </div>
 
----
-layout: two-cols-header
----
-
-# Pourquoi ça marche
-
-::left::
-
-### Le CLAUDE.md du projet
-
-Les conventions du codebase dans le contexte de *chaque* session :
-
-```ts
-// fr.cx() d'abord (classes utilitaires DSFR)
-<div className={fr.cx("fr-container", "fr-py-4w")}>
-
-// tss-react uniquement pour le CSS scopé runtime
-const useStyles = tss.create({ card: { borderRadius: "8px" } });
-```
-
-::right::
-
-### Les skills perso
-
-La connaissance métier directement câblée :
-
-- `react-dsfr` : imports par composant, pas de barrel, pas de MUI
-- `rgaa` : grille RGAA 4.1.2 intégrée dans chaque revue
-- `securite-anssi` : règles de sécurité État
-
-<div class="fr-highlight fr-mt-2w">
-  <p><strong>Résultat :</strong> Claude écrit du code qui ressemble au codebase existant. Première génération = quasi commit-ready.</p>
+<div class="fr-highlight max-w-2xl mx-auto text-left">
+  CLAUDE.md + skills = première génération quasi commit-ready. Claude écrit du code qui ressemble au codebase existant.
 </div>
 
----
-layout: two-cols-header
----
-
-# Questions fréquentes
-
-::left::
-
-<div style="font-size: 0.85rem">
-<div class="fr-callout fr-callout--brown-caramel fr-py-1w fr-px-2w fr-mb-1w">
-  <p class="fr-callout__title fr-text--sm">Ça remplace les développeurs ?</p>
-  <p>Non. Claude génère un brouillon correct - le développeur valide, affine et décide. Les tâches aidées : design vers composant DSFR, code répétitif conforme aux conventions, audit RGAA.</p>
-</div>
-<div class="fr-callout fr-callout--brown-caramel fr-py-1w fr-px-2w fr-mb-1w">
-  <p class="fr-callout__title fr-text--sm">C'est sécurisé ? Vous envoyez votre code ?</p>
-  <p>Le code source (pas les données utilisateurs) est envoyé à l'API Anthropic. Anthropic ne réutilise pas les données des clients API pour entraîner ses modèles (politique Enterprise). RTK filtre localement avant envoi.</p>
-</div>
-</div>
-
-::right::
-
-<div style="font-size: 0.85rem">
-<div class="fr-callout fr-callout--brown-caramel fr-py-1w fr-px-2w fr-mb-1w">
-  <p class="fr-callout__title fr-text--sm">Combien ça coûte ?</p>
-  <p>Abonnement Claude Code (Pro/Enterprise) + tokens API si hors plan. RTK réduit significativement le coût sur les opérations courantes (CLI). Voir les stats RTK pour l'ordre de grandeur.</p>
-</div>
-<div class="fr-callout fr-callout--brown-caramel fr-py-1w fr-px-2w">
-  <p class="fr-callout__title fr-text--sm">Il hallucine ?</p>
-  <p>Oui, parfois. Les skills et CLAUDE.md réduisent les erreurs de convention. Playwright détecte les erreurs de rendu en live. Le workflow plan-first permet de valider avant que le code ne s'écrive.</p>
-</div>
-</div>
-
----
-layout: two-cols-header
----
-
-# Démarrer & ressources
-
-::left::
-
-<div style="font-size: 0.85rem">
-
-### Démarrer en 5 min
-
-<ol style="list-style: decimal inside; line-height: 2">
-  <li><code>npm install -g @anthropic-ai/claude-code</code></li>
-  <li><code>claude</code> dans ton projet</li>
-  <li>Crée un <code>CLAUDE.md</code> avec les conventions clés (<code>/init</code>)</li>
-  <li><code>/plugin install figma</code></li>
-  <li>Colle une URL de nœud Figma et demande l'implémentation</li>
-</ol>
-</div>
-
-::right::
-
-<div style="font-size: 0.85rem">
-
-### Liens
-
-<ul style="line-height: 2">
-  <li><strong>Claude Code</strong> - <code>claude.ai/code</code></li>
-  <li><strong>Docs MCP</strong> - <code>docs.claude.com/en/docs/claude-code/mcp</code></li>
-  <li><strong>react-dsfr</strong> - <code>github.com/codegouvfr/react-dsfr</code></li>
-  <li><strong>DSFR officiel</strong> - <code>systeme-de-design.gouv.fr</code></li>
-  <li><strong>cartes.gouv.fr</strong> - <code>github.com/IGNF/cartes.gouv.fr</code></li>
-  <li><strong>Plugins officiel</strong> - <code>github.com/anthropics/claude-plugins-official</code></li>
-</ul>
-</div>
-
-<div class="absolute bottom-6 left-0 right-0 text-center fr-text--sm" style="color: #6b6b6b">
-  ← → pour naviguer · Posez-moi des questions !
+<div class="fr-mt-4w fr-text--sm" style="color: #6b6b6b">
+  <code>github.com/IGNF/cartes.gouv.fr</code>
+  &nbsp;·&nbsp;
+  ← → pour naviguer · Des questions ?
 </div>
