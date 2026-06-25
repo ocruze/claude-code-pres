@@ -369,19 +369,17 @@ layout: two-cols-header
 
 **react-dsfr** - conventions d'import, composants natifs, `fr.cx()`, pas de barrel, pas de MUI.
 Quand : sur tout projet utilisant `@codegouvfr/react-dsfr`.
-`/marketplace install` + dépôt skills DSFR
-
-<p></p>
+[Installation](https://github.com/etalab-ia/skills/tree/main/skills/react-dsfr)
 
 **rgaa** - grille RGAA 4.1.2 intégrée automatiquement dans chaque revue.
 Quand : avant toute PR touchant du HTML/JSX visible.
-`/marketplace install` + dépôt skills accessibilité
+[Installation](https://github.com/etalab-ia/skills/tree/main/skills/rgaa)
 
 ::right::
 
 **securite-anssi** - règles de sécurité de l'État sur les inputs, les headers, les dépendances.
 Quand : sur tout projet exposé au public ou traitant des données personnelles.
-`/marketplace install` + dépôt skills sécurité
+[Installation](https://github.com/etalab-ia/skills/tree/main/skills/securite-anssi)
 
 ::div{class="fr-callout fr-callout--green-emeraude fr-mt-2w"}
 <p class="fr-callout__title">À retenir</p>
@@ -540,10 +538,4 @@ class: text-center
 
 <div class="fr-highlight max-w-2xl mx-auto text-left">
   CLAUDE.md + skills = première génération quasi commit-ready. Claude écrit du code qui ressemble au codebase existant.
-</div>
-
-<div class="fr-mt-4w fr-text--sm" style="color: #6b6b6b">
-  <code>github.com/IGNF/cartes.gouv.fr</code>
-  &nbsp;·&nbsp;
-  ← → pour naviguer · Des questions ?
 </div>

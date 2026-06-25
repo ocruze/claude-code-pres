@@ -1,4 +1,4 @@
-# Stand de démo : Claude Code au quotidien sur cartes.gouv.fr
+# Stand de démo : L'écosystème Claude Code
 
 Visionner la présentation en ligne : https://ocruze.github.io/claude-code-pres/
 
