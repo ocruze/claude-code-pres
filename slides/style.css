@@ -4,7 +4,7 @@
    ========================================================= */
 
 /* Charge le CSS DSFR complet (police Marianne, tokens, composants) */
-@import '/dsfr/dsfr.min.css';
+@import '@gouvfr/dsfr/dist/dsfr.min.css';
 
 /* === Theme clair global === */
 :root {

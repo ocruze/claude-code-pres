@@ -4,12 +4,13 @@ title: "L'écosystème Claude Code"
 background: "#000091"
 class: text-center
 highlighter: shiki
-favicon: "/dsfr/favicon.svg"
+favicon: "/favicon.svg"
 lineNumbers: true
 transition: slide-left
 mdc: true
 colorSchema: light
 author: Orka Arnest CRUZE
+hideInToc: true
 ---
 
 # L'écosystème Claude Code
@@ -30,6 +31,15 @@ author: Orka Arnest CRUZE
 <div class="absolute bottom-8 left-0 right-0 text-center text-white/60 text-sm">
   Orka Arnest CRUZE - Concepteur-développeur - RDS/SDM
 </div>
+
+---
+layout: default
+hideInToc: true
+---
+
+# Index
+
+<Toc columns="2" />
 
 ---
 
@@ -392,7 +402,7 @@ layout: two-cols-header
 
 <div style="font-size: 0.85rem; line-height: 1.5">
 
-**Rôle** : proxy transparent sur chaque commande Bash — filtre la verbosité des CLI avant qu'elle n'entre dans le contexte Claude.
+**Rôle** : proxy transparent sur chaque commande Bash - filtre la verbosité des CLI avant qu'elle n'entre dans le contexte Claude.
 
 **Quand** : dès qu'on utilise des outils verbeux (ESLint, grep, git, jest…). Le hook s'enregistre une fois, s'applique automatiquement.
 
@@ -403,7 +413,7 @@ layout: two-cols-header
 <div class="fr-callout fr-callout--purple-glycine fr-mt-2w" style="font-size: 0.8rem; line-height: 1.5">
   <p class="fr-callout__title" style="font-size: 0.9rem">Chiffres réels (run local)</p>
   <ul class="fr-mt-1w">
-    <li><strong>3 338</strong> commandes — 9,1 M tokens économisés (84,2 %)</li>
+    <li><strong>3 338</strong> commandes - 9,1 M tokens économisés (84,2 %)</li>
     <li>Lint / ESLint : <strong>96 à 99 %</strong> de réduction</li>
     <li>read / grep : plus gros volume absolu (5,9 M + 1,4 M)</li>
   </ul>
@@ -445,7 +455,7 @@ layout: two-cols-header
 
 ---
 
-# Le workflow
+# Le workflow : design Figma vers DSFR + RGAA
 
 <div class="flex flex-col items-center gap-3 fr-mt-2w text-lg">
   <div class="fr-callout fr-py-1w fr-px-3w" style="background: #e3e3fd; border-color: var(--blue-france)">
@@ -469,26 +479,36 @@ layout: two-cols-header
 layout: two-cols-header
 ---
 
-# Exemple concret : design vers DSFR + RGAA
+# Exemple concret
 
 ::left::
 
-## Prompt réel utilisé
+**Prompt réel utilisé**
 
-« Implémente la maquette Figma de l'issue #845 (modale "Ajouter une vignette") : figma.com/design/HwJU1vyERVE51JJecQ95U3/Alim-diff?node-id=680-4874 — Crée VignetteModal.tsx avec cadre 1:1, slider de zoom, zone d'upload jpg/png/svg et boutons Annuler/Enregistrer. Uniquement des composants @codegouvfr/react-dsfr natifs. »
+« Implémente la maquette Figma de l'issue #845 (modale "Ajouter une vignette") : figma.com/design/HwJU1vyERVE51JJecQ95U3/Alim-diff?node-id=680-4874 - Crée VignetteModal.tsx avec cadre 1:1, slider de zoom, zone d'upload jpg/png/svg et boutons Annuler/Enregistrer. Uniquement des composants @codegouvfr/react-dsfr natifs. » + [**CLAUDE.md**](https://github.com/IGNF/cartes.gouv.fr/blob/main/CLAUDE.md)
 
 **Ce que Claude fait automatiquement**
 
+::div{style="font-size: 0.82rem; line-height: 1.4"}
 - Lit la user story via `gh issue view 845`
 - Appelle `get_design_context` sur le nœud Figma
-- Charge les conventions DSFR depuis le `CLAUDE.md`
+- Charge les conventions DSFR depuis la librairie figma de DSFR et le `CLAUDE.md`
 - Génère `VignetteModal.tsx` avec composants DSFR natifs
 - Vite HMR recharge le navigateur instantanément
 - Vérifie le rendu avec playwright
+::
 
 ::right::
 
-<img src="/img/rendu-vignette.png" style="max-height: 60vh; border-radius: 0.5rem; box-shadow: 0 4px 16px rgba(0,0,0,0.12); max-width: 100%">
+**Rendu**
+
+::div{style="font-size: 0.82rem; line-height: 1.4"}
+- Fidélité visuelle : mise en page et composants respectés sans retouche manuelle​
+- Composants react-dsfr, minimum de styles custom​
+- Auto-test (lint, build et test visuel avec playwright)​
+::
+
+<img src="/img/rendu-vignette.png" style="max-height: 30vh; border-radius: 0.5rem; box-shadow: 0 4px 16px rgba(0,0,0,0.12); max-width: 100%">
 
 
 ---
