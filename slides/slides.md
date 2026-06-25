@@ -390,28 +390,30 @@ layout: two-cols-header
 
 ::left::
 
-**Rôle** : proxy transparent sur chaque commande Bash. Filtre la verbosité des CLI avant qu'elle n'entre dans le contexte Claude.
+<div style="font-size: 0.85rem; line-height: 1.5">
 
-**Quand** : dès qu'on utilise des outils verbeux dans la session (ESLint, grep, git, jest…). Le hook s'enregistre une fois, s'applique à toutes les commandes automatiquement.
+**Rôle** : proxy transparent sur chaque commande Bash — filtre la verbosité des CLI avant qu'elle n'entre dans le contexte Claude.
+
+**Quand** : dès qu'on utilise des outils verbeux (ESLint, grep, git, jest…). Le hook s'enregistre une fois, s'applique automatiquement.
 
 **Install** : [rtk-ai.app/#install](https://www.rtk-ai.app/#install)
 
+</div>
+
+<div class="fr-callout fr-callout--purple-glycine fr-mt-2w" style="font-size: 0.8rem; line-height: 1.5">
+  <p class="fr-callout__title" style="font-size: 0.9rem">Chiffres réels (run local)</p>
+  <ul class="fr-mt-1w">
+    <li><strong>3 338</strong> commandes — 9,1 M tokens économisés (84,2 %)</li>
+    <li>Lint / ESLint : <strong>96 à 99 %</strong> de réduction</li>
+    <li>read / grep : plus gros volume absolu (5,9 M + 1,4 M)</li>
+  </ul>
+</div>
+
 ::right::
 
-<div class="fr-callout fr-callout--purple-glycine">
-  <p class="fr-callout__title">Chiffres réels</p>
-  <div class="flex gap-8 fr-mt-1w">
-    <div class="text-center">
-      <div style="font-size: 2rem; font-weight: 700">85,4 %</div>
-      <div style="color: #6b6b6b; font-size: 0.8rem">réduction sortie CLI courante</div>
-    </div>
-    <div class="text-center">
-      <div style="font-size: 2rem; font-weight: 700">98,7 %</div>
-      <div style="color: #6b6b6b; font-size: 0.8rem">sur ESLint</div>
-    </div>
-  </div>
-  <p class="fr-mt-2w fr-text--sm">Stats locales via <code>rtk gain</code> / <code>rtk gain --history</code> / <code>rtk discover</code></p>
-</div>
+<img src="/img/rtk-gain.png" style="border-radius: 0.5rem; box-shadow: 0 4px 16px rgba(0,0,0,0.12); max-width: 100%">
+
+<p style="font-size: 0.75rem; color: #6b6b6b; margin-top: 0.5rem">Lancer <code>rtk gain</code> pour voir vos propres chiffres</p>
 
 ---
 layout: two-cols-header
@@ -464,29 +466,30 @@ layout: two-cols-header
 </div>
 
 ---
-layout: center
-class: text-center
+layout: two-cols-header
 ---
 
-# Démo : design vers DSFR + RGAA
+# Exemple concret : design vers DSFR + RGAA
 
-<!-- Placer le clip enregistré dans slides/public/demo-hero.mp4 -->
-<!-- Décommenter la ligne video ci-dessous une fois le clip enregistré -->
-<!-- <video class="mx-auto rounded-xl shadow-2xl" style="max-height: 65vh" autoplay loop muted src="/demo-hero.mp4" /> -->
+::left::
 
-::div{class="fr-mt-2w fr-callout max-w-2xl mx-auto text-left"}
-<p class="fr-callout__title">Prompt réel utilisé</p>
+## Prompt réel utilisé
 
-`« L'ajout d'une licence ouverte m'a l'air avoir un souci. À ma compréhension, ça doit ajouter seulement les éléments de ce design figma.com/design/[...] et rien d'autre »`
+« Implémente la maquette Figma de l'issue #845 (modale "Ajouter une vignette") : figma.com/design/HwJU1vyERVE51JJecQ95U3/Alim-diff?node-id=680-4874 — Crée VignetteModal.tsx avec cadre 1:1, slider de zoom, zone d'upload jpg/png/svg et boutons Annuler/Enregistrer. Uniquement des composants @codegouvfr/react-dsfr natifs. »
 
 **Ce que Claude fait automatiquement**
 
+- Lit la user story via `gh issue view 845`
 - Appelle `get_design_context` sur le nœud Figma
-- Charge les skills `react-dsfr` et `rgaa`
-- Génère les composants conformes DSFR *et* RGAA
-- Playwright vérifie le rendu dans le navigateur
-- Itère sur les détails UX jusqu'à validation
-::
+- Charge les conventions DSFR depuis le `CLAUDE.md`
+- Génère `VignetteModal.tsx` avec composants DSFR natifs
+- Vite HMR recharge le navigateur instantanément
+- Vérifie le rendu avec playwright
+
+::right::
+
+<img src="/img/rendu-vignette.png" style="max-height: 60vh; border-radius: 0.5rem; box-shadow: 0 4px 16px rgba(0,0,0,0.12); max-width: 100%">
+
 
 ---
 layout: center
